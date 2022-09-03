@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/react-testshop/static/css/main.86f7b914.css",
+    "main.js": "/react-testshop/static/js/main.ed03eca5.js",
+    "static/media/logo.png": "/react-testshop/static/media/logo.693456c24d06588ee42a.png",
+    "static/media/headnight.jpg": "/react-testshop/static/media/headnight.90ced1fba4df83cf444d.jpg",
+    "static/media/rwdBG.jpg": "/react-testshop/static/media/rwdBG.08cfe0038d2ae9916f6b.jpg",
+    "static/media/4wdBG.jpg": "/react-testshop/static/media/4wdBG.e11a7b07f1af0ac53eee.jpg",
+    "index.html": "/react-testshop/index.html",
+    "main.86f7b914.css.map": "/react-testshop/static/css/main.86f7b914.css.map",
+    "main.ed03eca5.js.map": "/react-testshop/static/js/main.ed03eca5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86f7b914.css",
+    "static/js/main.ed03eca5.js"
+  ]
+}
