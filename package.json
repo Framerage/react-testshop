@@ -2,7 +2,7 @@
   "name": "react-testshop",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://framerage.github.io/testshop/",
+  "homepage": "https://framerage.github.io/react-testshop/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
