@@ -1,0 +1,93 @@
+.header {
+  background-image: url("../../../public/img/headnight.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 200px;
+  min-height: 100px;
+  position: relative;
+  border-radius: 25px 25px 0 0;
+  margin-top: 20px;
+//   border-top: 5px solid black;
+//   border-left: 5px solid black;
+//   border-right: 5px solid black;
+  box-shadow: 0 -5px 20px 5px black;
+
+  .headerItems {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    .headerItems__logo {
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 20px 10px black;
+      border-radius: 10px;
+      transition: 0.3s;
+      width: auto;
+      height: 100px;
+      min-height: 50px;
+      &:hover {
+        scale: 1.02;
+        cursor: pointer;
+        box-shadow: 0 0 15px 10px rgb(26, 26, 26);
+      }
+      .logo__img {
+        background-image: url("../../../public/img/logo.png");
+        background-size: cover;
+        width: 100px;
+        height: 90px;
+        min-width: 50px;
+        min-height: 40px;
+        margin-right: 20px;
+      }
+      p {
+        font-size: 12.5em;
+        font-weight: 700;
+        font-family: "Montserrat", sans-serif;
+        color: rgb(250, 250, 250);
+        margin-right: 10px;
+      }
+    }
+    .headerItems__userActive {
+      display: flex;
+      flex-direction: column;
+      width: 150px;
+      .userActive__items {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 4em;
+        color: whitesmoke;
+        margin: 5px;
+        box-shadow: 0 0 20px 15px black;
+        border-radius: 10px;
+        padding: 5px;
+        transition: 0.3s;
+        &:hover{
+        box-shadow: 0 0 15px 10px rgb(26, 26, 26);
+        scale: 1.02;
+        }
+        img {
+          cursor: pointer;
+          width:25px;
+        }
+      }
+      .userActive__themes {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-top: 10px;
+        button {
+          margin: 5px;
+          width: 20px;
+          height: 20px;
+          border-radius: 13px;
+          cursor: pointer;
+          border: transparent;
+
+        }
+      }
+    }
+  }
+}
