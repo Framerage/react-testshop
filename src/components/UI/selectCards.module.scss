@@ -1,0 +1,14 @@
+.slct {
+  width: 90%;
+  height: 25px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border: 0;
+  .slct__item {
+    transition: 1s;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5em;
+  }
+}
