@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Content from "./Content/Content";
 import Header from "./Header/Header";
-const Home = () => {
+const Home = ({filterItems,cards}) => {
   const [fillColor, setFillColor] = useState("middle");
 
   const getLightTheme = () => {
@@ -41,7 +41,7 @@ const Home = () => {
     usialTheme={getUsialTheme}
     darkTheme={getDarkTheme}
     />
-    <Content/>
+    <Content cards={cards} filterItems={filterItems}/>
     </>
   );
 };

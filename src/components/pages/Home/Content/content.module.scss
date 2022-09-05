@@ -5,7 +5,7 @@
   min-height: 500px;
   .content__filter {
     width: 100%;
-    height: 155px;
+    height: 205px;
     box-shadow: 0 5px 20px 5px black;
     display: flex;
     flex-direction: column;
@@ -16,69 +16,47 @@
     .filter__filterHead {
       font-family: "Montserrat", sans-serif;
       font-size: 1.5em;
-      text-align: center;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      height: 50px;
+      height: 100px;
       background: linear-gradient(grey, black, grey);
     }
     .filter__filterItems {
       display: flex;
       width: auto;
-      height: 105px;
-
-      .filterItems__fourWheels {
+      height: 155px;
+      .filterItems__drives {
         width: 50%;
-        //background-image: url("./img/4wdBG.jpg");
-        background-size: cover;
-        background-position-y: -220px;
+        background-size: 800px 400px;
+        background-position: center;
+        background-position-y: -200px;
         background-repeat: no-repeat;
-        text-align: center;
-        border-radius: 0 0 0 25px;
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        &:hover {
-          border: 3px solid grey;
-          scale: 0.9999;
-          cursor: pointer;
-        }
-        p {
-          margin-right: 20px;
-          font-family: "Montserrat", sans-serif;
-        }
-      }
-      .filterItems__rearWheels {
-        width: 50%;
-        background-size: cover;
-        background-position-y: -220px;
-        background-repeat: no-repeat;
-        border-radius: 0 0 25px;
         display: flex;
         align-items: center;
+        cursor: pointer;
         &:hover {
-          border: 3px solid grey;
-          scale: 0.9999;
-          cursor: pointer;
+          color: black;
         }
         p {
-          margin-left: 20px;
+          margin:0 20px;
           font-family: "Montserrat", sans-serif;
         }
       }
     }
   }
-  .content__selectCards{
+  .content__selectCards {
     font-family: "Montserrat", sans-serif;
     font-size: 1.5em;
     text-align: center;
     justify-content: center;
     height: 50px;
-    margin:20px 0;
+    margin: 20px 0;
     border-radius: 15px;
     background: linear-gradient(grey, black, grey);
     display: flex;
     align-items: center;
-    img{
+    img {
       margin: 0 10px;
     }
   }
@@ -92,4 +70,9 @@
   transition: 1s;
   width: 62px;
   height: 62px;
+}
+
+.activeFilter {
+  border: 3px double black;
+  scale: 0.9999;
 }

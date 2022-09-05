@@ -7,7 +7,9 @@
   overflow: hidden;
   border: 2px solid black;
   position: relative;
-  background:linear-gradient(black,gray,black);
+  background: linear-gradient(black, gray, black);
+  display: flex;
+  flex-direction: column;
 
   button {
     position: absolute;
@@ -27,8 +29,7 @@
       cursor: pointer;
     }
     &:focus {
-        animation: openClose 1s ease-in-out;
-
+      animation: openClose 1s ease-in-out;
     }
   }
   @keyframes openClose {
@@ -53,7 +54,7 @@
       border-radius: 0 30px 0 0;
       .shotDescrip__text {
         font-family: "Montserrat", sans-serif;
-        font-size: 3em;
+        font-size: 5em;
         border-left: 2px solid rgb(49, 46, 46);
         border-bottom: 2px solid rgb(49, 46, 46);
         color: white;
@@ -65,4 +66,51 @@
       }
     }
   }
+  .card__functional {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 5em;
+    img{
+      width: 30px;
+      border-radius: 15px;
+      &:hover{
+        cursor: pointer;
+        scale: 1.05;
+      }
+    }
+    .functional__chooseType {
+      width: 100px;
+      height: 30px;
+      background: linear-gradient(white, black);
+      box-shadow: 0 0 15px 7px black;
+      border: 2px solid black;
+      border-radius: 15px;
+      margin: 10px;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        border: grey;
+      }
+    }
+    p {
+      color: white;
+      font-family: "Montserrat", sans-serif;
+    }
+  }
+  .card__descrption{
+    display: flex;
+    flex-direction: column;
+    font-size: 4em;
+    color: white;
+    margin: 10px 20px;
+    position: relative;
+    .descrptionText{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+.activeType {
+  background: linear-gradient(black, white) !important;
 }

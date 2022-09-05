@@ -1,61 +1,90 @@
-import React, { useEffect } from 'react'
-import Card from '../../../Card/Card';
-import SelectCards from '../../../UI/SelectCards';
-import styles from './content.module.scss'
-const Content = () => {
-    const statusCard=[];
+import React, { useState } from "react";
+import Card from "../../../Card/Card";
+import SelectCards from "../../../UI/SelectCards";
+import styles from "./content.module.scss";
+const Content = ({cards, filterItems }) => {
+  const statusCard = [];
+  const [filterAnim, setFilterAnim] = useState(null);
+  const onSelectFilter = (index) => {
+    setFilterAnim(index);
+  };
 
-    // useEffect(()=>{
-    //     cardAnimation();
-    // },[])
-
-    const cardAnimation=(elem)=>{
-        let item=elem.target.parentElement;
-        if (statusCard[item.id]){
-          statusCard[item.id]=false;
-          item.classList.remove(`${styles.anim}`)
-          //console.log(statusCard)
-        }
-        else{
-          statusCard[item.id]=true;
-          item.classList.add(`${styles.anim}`)
-          //console.log(statusCard)
-        }
-      }
-return (
+  const cardAnimation = (elem) => {
+    let item = elem.target.parentElement;
+    if (statusCard[item.id]) {
+      statusCard[item.id] = false;
+      item.classList.remove(`${styles.anim}`);
+    } else {
+      statusCard[item.id] = true;
+      item.classList.add(`${styles.anim}`);
+    }
+  };
+  return (
     <main className={styles.content}>
       <div className={styles.content__filter}>
-        <div className={styles.filter__filterHead}>Choose drive</div>
+        <div
+          onClick={() => onSelectFilter(null)}
+          className={styles.filter__filterHead}
+        >
+          Choose drive
+        </div>
         <div className={styles.filter__filterItems}>
-          <div className={styles.filterItems__fourWheels} style={{backgroundImage: 'url("./img/4wdBG.jpg")'}}>
-            <p>4WD</p>
-          </div>
-          <div className={styles.filterItems__rearWheels} style={{backgroundImage: 'url("./img/rwdBG.jpg")'}}>
-            <p>RWD</p>
-          </div>
+          {filterItems.map((item, index) => (
+            <div
+              onClick={() => onSelectFilter(index)}
+              key={`${item.filterName}_${index}`}
+              className={
+                filterAnim === index
+                  ? styles.activeFilter + " " + styles.filterItems__drives
+                  : styles.filterItems__drives
+              }
+              style={{
+                backgroundImage: `url(${item.filterBg})`,
+                borderRadius: `${
+                  item.filterName === "4WD" ? "0 0 0 25px" : "0 0 25px"
+                }`,
+                justifyContent: `${
+                  item.filterName === "4WD" ? "end" : "start"
+                }`,
+              }}
+            >
+              <p>{item.filterName}</p>
+            </div>
+          ))}
         </div>
       </div>
 
       <div className={styles.content__selectCards}>
-      <img src="./img/lightArrow.png" style={{ width: "45px", height: "55px" }}/>
-      <SelectCards options={
-            [{value:'price',name:'sort by price'},
-            {value:'name',name:'sort by name'}]
-        }/>
-<img
-  src="./img/lightArrow.png"
-  style={{ rotate: "180deg",width: "45px", height: "55px" }}
-/>
-
+        <img
+          src="./img/lightArrow.png"
+          style={{ width: "45px", height: "55px" }}
+          alt='lArrow'
+        />
+        <SelectCards
+          options={[
+            { value: "price", name: "sort by price" },
+            { value: "name", name: "sort by name" },
+          ]}
+        />
+        <img
+          src="./img/lightArrow.png"
+          style={{ rotate: "180deg", width: "45px", height: "55px" }}
+          alt='rArrow'
+        />
       </div>
 
       <div className={styles.content__items}>
-        <Card image='./img/cars/st-M-rx8.jpg' id={0} animation={cardAnimation}/>
-        <Card image='./img/cars/st-T-supra.jpg' id={1} animation={cardAnimation}/>
-        <Card image='./img/cars/st-M-rx7.jpg' id={2} animation={cardAnimation}/>
-        <Card image='./img/cars/st-Mit-le.jpg' id={3} animation={cardAnimation}/>
+        {cards.map((card,index)=>
+                <Card
+                key={`${card.name}_${index}`}
+                {...card}
+                id={index}
+                animation={cardAnimation}
+              />
+        )}
+
       </div>
     </main>
-);
+  );
 };
 export default Content;
