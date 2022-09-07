@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./selectCards.module.scss";
 const SelectCards = ({ options, value, onChange, defaultValue }) => {
 

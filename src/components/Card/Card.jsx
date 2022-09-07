@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import classes from "./card.module.scss";
+import PropTypes from 'prop-types'
 const Card = ({
   id,
   animation,
@@ -15,7 +16,7 @@ const Card = ({
   stockPrice,
   tunerPrice,
 }) => {
-  const { onAddToCart } = useContext(AppContext);
+  const { onAddToCart,isItemAdded } = useContext(AppContext);
   const carTypes = ["stock", "tuner"];
   const [animChoosedType, setAnimChoosedType] = useState(0);
   const [choosedType, setChoosedType] = useState(true);
@@ -23,8 +24,8 @@ const Card = ({
   const onAddCard = () => {
     setIsAdded(!isAdded);
     choosedType
-      ? onAddToCart({ car, stockHP, stockPrice,parent:id })
-      : onAddToCart({ car, tunerHP, tunerPrice,parent:id });
+      ? onAddToCart({ car,id,stockImage, stockHP , stockPrice,parentId:id,choosedType })
+      : onAddToCart({ car,id,tunerImage, tunerHP, tunerPrice,parentId:id,choosedType });
   };
   const onClickType = (index) => {
     setAnimChoosedType(index);
@@ -60,7 +61,7 @@ const Card = ({
           <p>{car}</p>
           <img
             onClick={onAddCard}
-            src={isAdded ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
+            src={isItemAdded(id) ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
             alt="checked"
           />
         </div>
@@ -75,4 +76,28 @@ const Card = ({
 
   );
 };
+
+Card.propTypes={
+  car:PropTypes.string,
+  stockPrice:PropTypes.string,
+  tunerPrice:PropTypes.string,
+  stockHP:PropTypes.string,
+  tunerHP:PropTypes.string,
+  stockText:PropTypes.string,
+  tunerText:PropTypes.string,
+  drive:PropTypes.string,
+  stockImage:PropTypes.string,
+  tunerImage:PropTypes.string,
+};
+
+Card.defaultProps={
+  car:'Name',
+  stockPrice:'0',
+  tunerPrice:'0',
+  drive:'WD',
+  stockImage:'https://otvet.imgsmail.ru/download/3469d045a3fac33da623e340cc5fe27f_i-3.jpg',
+  tunerImage:'https://otvet.imgsmail.ru/download/3469d045a3fac33da623e340cc5fe27f_i-3.jpg',
+  stockHP:'?',
+  tunerHP:'?',
+}
 export default Card;
