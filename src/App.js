@@ -2,72 +2,21 @@ import Home from "./components/pages/Home/Home";
 import "./index.scss";
 import { Route, Routes } from "react-router-dom";
 import Cart from "./components/pages/Cart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
+import axios from "axios";
+import Header from "./components/Header/Header";
 function App() {
-  const [cards, setCards] = useState([
-    {
-      car: "Mazda RX8",
-      drive: "RWD",
-      stockText:
-        "zavod, rotor, the with the best wheels and style. Burn at before 2000 years in Japan",
-      stockImage: "./img/cars/st-M-rx8.jpg",
-      stockHP: 150,
-      tunerText: "JZ",
-      tunerImage: "./img/cars/tun-M-rx8.jpg",
-      tunerHP: 550,
-      stockPrice: 700,
-      tunerPrice: 1000,
-    },
-    {
-      car: "Mazda RX7",
-      drive: "RWD",
-      stockText: "zavod",
-      stockImage: "./img/cars/st-M-rx7.jpg",
-      stockHP: 170,
-      tunerText: "JZ-2",
-      tunerImage: "./img/cars/tun-M-rx7.jpg",
-      tunerHP: 650,
-      stockPrice: 600,
-      tunerPrice: 900,
-    },
-    {
-      car: "Mitsubishi LE9",
-      drive: "4WD",
-      stockText: "zavod",
-      stockImage: "./img/cars/st-Mit-le.jpg",
-      stockHP: 110,
-      tunerText: "zavod",
-      tunerImage: "./img/cars/tun-Mit-le.jpg",
-      tunerHP: 550,
-      stockPrice: 800,
-      tunerPrice: 1200,
-    },
-    {
-      car: "Nissan Skyline R34",
-      drive: "4WD",
-      stockText: "zavod",
-      stockImage: "./img/cars/st-N-sky.jpg",
-      stockHP: 160,
-      tunerText: "zavod",
-      tunerImage: "./img/cars/tun-N-sky.jpg",
-      tunerHP: 850,
-      stockPrice: 900,
-      tunerPrice: 1500,
-    },
-    {
-      car: "Toyota Altezza",
-      drive: "RWD",
-      stockText: "zavod",
-      stockImage: "./img/cars/st-T-alt.jpg",
-      stockHP: 105,
-      tunerText: "zavod",
-      tunerImage: "./img/cars/tun-T-alt.jpg",
-      tunerHP: 600,
-      stockPrice: 750,
-      tunerPrice: 1300,
+  const [cards, setCards] = useState([]);
+  const [fillColor, setFillColor] = useState("middle");
+  useEffect(()=>{
+    const fetchCards=async()=>{
+      const getCards = await axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars');
+      setCards(getCards.data)
     }
-  ]);
+    fetchCards();
+  },[])
+ 
   const [filterItems, setFilterItems] = useState([
     { filterName: "4WD", filterBg: "./img/4wdBG.jpg" },
     { filterName: "RWD", filterBg: "./img/rwdBG.jpg" },
@@ -85,23 +34,60 @@ function App() {
       setCartItems((prev) => [...prev, obj]);
     }
   };
+  
 
+  const getLightTheme = () => {
+    setFillColor("white");
+  };
+  const getUsialTheme = () => {
+    setFillColor("middle");
+  };
+  const getDarkTheme = () => {
+    setFillColor("black");
+  };
+  useEffect(() => {
+    if (fillColor !== "black" && fillColor !== "middle") {
+      let docBg = document.getElementById("html");
+      docBg.style.background =
+        "linear-gradient(yellowgreen,yellow,coral,yellowgreen)";
+      let headerBg = document.getElementById("header");
+      headerBg.style.backgroundImage = "url('./img/headsun.jpg')";
+      headerBg.style.backgroundPositionY = '-550px';
+    } else if (fillColor !== "black" && fillColor !== "white") {
+      let docBg = document.getElementById("html");
+      docBg.style.background =
+        "linear-gradient(rgb(64, 184, 224),lightpink,rgb(64, 184, 224))";
+      let headerBg = document.getElementById("header");
+      headerBg.style.backgroundImage = "url('./img/headday.jpg')";
+    } else {
+      let docBg = document.getElementById("html");
+      docBg.style.background = "linear-gradient(black,rgb(55, 34, 93),black)";
+      let headerBg = document.getElementById("header");
+      headerBg.style.backgroundImage = "url('./img/headnight.jpg')";
+    }
+  }, [fillColor]);
   return (
     <AppContext.Provider
       value={{
         cards,
         cartItems,
         onAddToCart,
+        setCards
       }}
     >
       <div className="wrapper">
+      < Header
+    lightTheme={getLightTheme}
+    usialTheme={getUsialTheme}
+    darkTheme={getDarkTheme}
+    />
         <Routes>
           <Route
             exact
             path="/react-testshop/"
             element={<Home cards={cards} filterItems={filterItems} />}
           />
-          <Route path="/react-testshop/cart/" element={<Cart />} />
+          <Route path="/react-testshop/cart/" element={<Cart cartItems={cartItems} />} />
         </Routes>
       </div>
     </AppContext.Provider>

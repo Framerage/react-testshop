@@ -23,8 +23,8 @@ const Card = ({
   const onAddCard = () => {
     setIsAdded(!isAdded);
     choosedType
-      ? onAddToCart({ car, stockHP, stockPrice })
-      : onAddToCart({ car, tunerHP, tunerPrice });
+      ? onAddToCart({ car, stockHP, stockPrice,parent:id })
+      : onAddToCart({ car, tunerHP, tunerPrice,parent:id });
   };
   const onClickType = (index) => {
     setAnimChoosedType(index);
