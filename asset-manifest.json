@@ -1,14 +1,16 @@
 {
   "files": {
-    "main.css": "/react-testshop/static/css/main.9ff4ffd5.css",
-    "main.js": "/react-testshop/static/js/main.c760327a.js",
+    "main.css": "/react-testshop/static/css/main.e71f72f0.css",
+    "main.js": "/react-testshop/static/js/main.07cecc62.js",
     "static/media/wheel.png": "/react-testshop/static/media/wheel.188e937719d44d6cf09a.png",
+    "static/media/cart-logo.png": "/react-testshop/static/media/cart-logo.ee21083b6d2da15a14d6.png",
+    "static/media/logo.png": "/react-testshop/static/media/logo.693456c24d06588ee42a.png",
     "index.html": "/react-testshop/index.html",
-    "main.9ff4ffd5.css.map": "/react-testshop/static/css/main.9ff4ffd5.css.map",
-    "main.c760327a.js.map": "/react-testshop/static/js/main.c760327a.js.map"
+    "main.e71f72f0.css.map": "/react-testshop/static/css/main.e71f72f0.css.map",
+    "main.07cecc62.js.map": "/react-testshop/static/js/main.07cecc62.js.map"
   },
   "entrypoints": [
-    "static/css/main.9ff4ffd5.css",
-    "static/js/main.c760327a.js"
+    "static/css/main.e71f72f0.css",
+    "static/js/main.07cecc62.js"
   ]
 }
