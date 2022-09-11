@@ -59,11 +59,11 @@ const Card = ({
             </div>
           ))}
           <p>{car}</p>
-          <img
+          {id!=='#' &&           <img
             onClick={onAddCard}
-            src={isItemAdded(id) ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
+            //src={isItemAdded(id) ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
             alt="checked"
-          />
+          />}
         </div>
         <div className={classes.card__descrption}>
           <span>Description:</span>
@@ -91,6 +91,7 @@ Card.propTypes={
 };
 
 Card.defaultProps={
+  id:'#',
   car:'Name',
   stockPrice:'0',
   tunerPrice:'0',

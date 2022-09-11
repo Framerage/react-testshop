@@ -92,9 +92,9 @@ const Home = ({ filterItems, cards }) => {
             value={sortValue}
             onChange={(sort) => setSortValue(sort)}
             options={[
-              { value: "stockPrice", name: "sort by stock price" },
-              { value: "tunerPrice", name: "sort by tuner price" },
-              { value: "car", name: "sort by name" },
+              { value: "stockPrice", type: "sort by stock price" },
+              { value: "tunerPrice", type: "sort by tuner price" },
+              { value: "car", type: "sort by name" },
             ]}
           />
           <img

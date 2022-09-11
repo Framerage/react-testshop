@@ -17,7 +17,7 @@ const SelectCards = ({ options, value, onChange, defaultValue }) => {
           key={option.value}
           value={option.value}
         >
-          {option.name}
+          {option.type}
 
         </option>
       ))}
