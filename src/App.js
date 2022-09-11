@@ -2,170 +2,135 @@ import Home from "./components/pages/Home/Home";
 import "./index.scss";
 import { Route, Routes } from "react-router-dom";
 import Cart from "./components/pages/Cart/Cart";
-import { Component, useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setCart } from "./redux/actions/cart";
+import { setCardItems } from "./redux/actions/cards";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import store from "./redux/store";
-import {setCardItems} from './redux/actions/cards'
-import {connect} from 'react-redux'
-import cards from "./redux/redusers/cards";
-// function App() {
-  // const [cards, setCards] = useState([]);
-  
-  // const filterItems = [
-  //   { filterName: "4WD", filterBg: "./img/4wdBG.jpg" },
-  //   { filterName: "RWD", filterBg: "./img/rwdBG.jpg" },
-  // ];
-  // const [cartItems, setCartItems] = useState([]);
-  // const [isLoading,setIsLoading]=useState(false)
+//import cards from "./redux/redusers/cards";
+//import filterItems from "./redux/redusers/filterItems";
+//import store from "./redux/store";
 
-  // useEffect(()=>{
-  //   const fetchCards=async()=>{
-  //     try{
-  //       setIsLoading(true)
-  //       const getCartItems= await axios.get("https://631076b736e6a2a04eeef849.mockapi.io/cartItems")
-  //       setCartItems(getCartItems.data)
-  //       const getCards = await axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars');
-  //       setCards(getCards.data)
-  //       setTimeout(()=>{
-  //         setIsLoading(false)
-  //       },1000)
-  //     }
-  //     catch(error){
-  //       console.log('Error with getting data')
-  //     }
+function App() {
+  const { cartItems } = useSelector(({ cartItems }) => {
+    return {
+      cartItems: cartItems.cartItems,
+    };
+  });
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("https://631076b736e6a2a04eeef849.mockapi.io/cartItems")
+      .then(({ data }) => {
+        dispatch(setCart(data));
+      });
+    axios
+      .get("https://631076b736e6a2a04eeef849.mockapi.io/cars")
+      .then(({ data }) => {
+        dispatch(setCardItems(data));
+      });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  // const fetchCards=async()=>{
+  //   try{
+  //     setIsLoading(true)
+  //     const getCartItems= await axios.get("https://631076b736e6a2a04eeef849.mockapi.io/cartItems")
+  //     setCartItems(getCartItems.data)
+  //     const getCards = await axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars');
+  //     setCards(getCards.data)
+  //     setTimeout(()=>{
+  //       setIsLoading(false)
+  //     },1000)
   //   }
-  //   fetchCards();
-  // },[])
- 
-
-
-  // const onAddToCart = async(obj) => {
-  //   try {
-  //     const findItem = cartItems.find(
-  //       (el) => Number(el.parentId) === Number(obj.id)
-  //     );
-  //     if (findItem) {
-  //       setCartItems((prev) =>
-  //         prev.filter((el) => Number(el.parentId) !== Number(obj.id))
-  //       );
-  //       await axios.delete(
-  //         `https://631076b736e6a2a04eeef849.mockapi.io/cartItems/${findItem.id}`
-  //       );
-  //     } else {
-  //       setCartItems((prev) => [...prev, obj]);
-  //       const { data } = await axios.post(
-  //         "https://631076b736e6a2a04eeef849.mockapi.io/cartItems",
-  //         obj
-  //       );
-  //       setCartItems((prev) => prev.map((item)=>{
-  //         if(item.parentId===data.parentId){
-  //           return {
-  //             ...item,
-  //             id:data.id
-  //           }
-  //         }
-  //         return item;
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.log("Error with adding card to cart, ", error);
+  //   catch(error){
+  //     console.log('Error with getting data')
   //   }
-  // };
+  // }
+  // fetchCards();
 
-  // const onRemoveCartItems = (id) => {
-  //   try {
-  //     axios.delete(
-  //       `https://631076b736e6a2a04eeef849.mockapi.io/cartItems/${id}`
-  //     );
-  //     setCartItems((prev) => prev.filter((el) => Number(el.id) !== Number(id)));
-  //   } catch (error) {
-  //     alert(" Owibka udaleniya ", error);
-  //   }
-  // };
-  // const isItemAdded = (id) => {
-  //   return cartItems.some((obj) => Number(obj.parentId) === Number(id));
-  // };
+  return (
+    <AppContext.Provider
+      value={{
+        cartItems,
+        isLoading,
+      }}
+    >
+      <div className="wrapper">
+        <Routes>
+          <Route exact path="/react-testshop/" element={<Home />} />
+          <Route path="/react-testshop/cart/" element={<Cart />} />
+        </Routes>
+      </div>
+    </AppContext.Provider>
+  );
+}
+export default App;
 
-//   return 
-// (
-//       <AppContext.Provider
-//       value={{
-//         cards,
-//         cartItems,
-//         onAddToCart,
-//         setCards,onRemoveCartItems,isItemAdded,isLoading
-//       }}
-//     >
+//For class component
+
+// export default connect(
+//   (state)=>{
+//     return {
+//       items:state.cards.cars,
+//       filter:state.filters
+//     }
+//   },
+//   (dispatch)=>{
+//     return{
+//       setCards:(items)=>dispatch(setCardItems(items))
+//     }
+//   }
+// )(App)
+
+// class App extends Component{
+//   componentDidMount(){
+//     axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars').then(({data})=>{
+//     this.props.setCardItems(data)
+//     });
+
+//   }
+
+//   render(){
+//     //console.log(this.props)
+//     return(
+
 //       <div className="wrapper">
 //         <Routes>
 //           <Route
 //             exact
 //             path="/react-testshop/"
-//             element={<Home 
-//               cards={cards} 
-//               filterItems={filterItems} 
+//             element={<Home
+//               cards={this.props.items}
+//               filterItems={[]}
 //               />}
 //           />
-//           <Route path="/react-testshop/cart/" element={<Cart 
-//           cartItems={cartItems} 
+//           <Route path="/react-testshop/cart/" element={<Cart
+//           cartItems={[]}
 //           />} />
 //         </Routes>
 //       </div>
-//     </AppContext.Provider>
-//     );
+//     )
+//   }
 // }
-//export default App;
 
-class App extends Component{
-  componentDidMount(){
-    axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars').then(({data})=>{
-    this.props.setCardItems(data)
-    });
- 
-  }
+// const mapStateToProps=(state)=>{
+//   //console.log(state.cards.cars)
+//   return {
+//     items:state.cards.cars,
+//     filter:state.filters
+//   }
+// };
+// const mapDispatchToProps={
+//   setCardItems,
+// }
 
-  render(){
-    //console.log(this.props)
-    return(
-      <AppContext.Provider
-      value={{
-        // cards,
-        // cartItems,
-        // onAddToCart,
-        // setCards,onRemoveCartItems,isItemAdded,isLoading
-      }}
-    >
-      <div className="wrapper">
-        <Routes>
-          <Route
-            exact
-            path="/react-testshop/"
-            element={<Home 
-              cards={this.props.items} 
-              filterItems={[]} 
-              />}
-          />
-          <Route path="/react-testshop/cart/" element={<Cart 
-          cartItems={[]} 
-          />} />
-        </Routes>
-      </div>
-    </AppContext.Provider>
-    )
-  }
-}
-
-const mapStateToProps=(state)=>{
-  //console.log(state.cards.cars)
-  return {
-    items:state.cards.cars,
-    filter:state.filters
-  }
-};
-const mapDispatchToProps={
-  setCardItems,
-}
-export default connect(mapStateToProps,
-  mapDispatchToProps
-  )(App);
+// export default connect(mapStateToProps,
+//   mapDispatchToProps
+//   )(App);

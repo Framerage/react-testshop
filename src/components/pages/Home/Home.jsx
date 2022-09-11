@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../../../context/AppContext";
 import { useCards } from "../../../hooks/useCards";
 import Card from "../../Card/Card";
@@ -6,16 +7,40 @@ import LoadAnimation from "../../LoadAnimation";
 import SelectCards from "../../UI/SelectCards";
 import Header from "./Header/Header";
 import styles from "./Home.module.scss";
-
-const Home = ({ filterItems, cards }) => {
+import { setFilterBy, setSortBy } from "../../../redux/actions/filters";
+import axios from "axios";
+import { useEffect } from "react";
+import {setCardItems} from '../../../redux/actions/cards'
+const Home = () => {
   const statusCard = [];
-  const [filterAnim, setFilterAnim] = useState(null);
-  const [sortValue, setSortValue] = useState("");
-  const [filterValue, setFilterValue] = useState("");
-  const {isLoading}=useContext(AppContext)
-  const onSelectFilter = (index, filterName) => {
-    setFilterAnim(index);
-    setFilterValue(filterName);
+  const filterItems = [
+    {
+      filterName: "4WD",
+      filterBg: "./img/4wdBG.jpg",
+    },
+    {
+      filterName: "RWD",
+      filterBg: "./img/rwdBG.jpg",
+    },
+  ];
+  const dispatch=useDispatch();
+  const { cards, sortBy, category } = useSelector(({ cards, filters }) => {
+    return {
+      cards: cards.cars,
+      sortBy: filters.sortBy,
+      category: filters.category,
+    };
+  });
+
+  const {cartItems,isLoading}=useContext(AppContext)
+  useEffect(()=>{
+        axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars').then(({data})=>{
+        dispatch(setCardItems(data))
+    });
+  },[])
+
+  const onSelectFilter = (filterName) => {
+    dispatch(setFilterBy(filterName));
   };
   const cardAnimation = (elem) => {
     let item = elem.target.parentElement;
@@ -27,7 +52,7 @@ const Home = ({ filterItems, cards }) => {
       item.classList.add(`${styles.anim}`);
     }
   };
-  const sortedAndFilteredCards = useCards(cards, sortValue, filterValue);
+  const sortedAndFilteredCards = useCards(cards, sortBy, category);
 
   // Functional to take down filter
   // const filterRef = useRef();
@@ -42,6 +67,42 @@ const Home = ({ filterItems, cards }) => {
   //   document.body.addEventListener("click", handleOutsideClick);
   // }, []);
 
+  const onAddToCart = async (obj) => {
+    try {
+      const findItem = cartItems.find(
+        (el) => Number(el.parentId) === Number(obj.id)
+      );
+      if (findItem) {
+        // setCartItems((prev) =>
+        //   prev.filter((el) => Number(el.parentId) !== Number(obj.id))
+        // );
+        await axios.delete(
+          `https://631076b736e6a2a04eeef849.mockapi.io/cartItems/${findItem.id}`
+        );
+      } else {
+        //setCartItems((prev) => [...prev, obj]);
+        const { data } = await axios.post(
+          "https://631076b736e6a2a04eeef849.mockapi.io/cartItems",
+          obj
+        );
+        // setCartItems((prev) => prev.map((item)=>{
+        //   if(item.parentId===data.parentId){
+        //     return {
+        //       ...item,
+        //       id:data.id
+        //     }
+        //   }
+        //   return item;
+        // }));
+      }
+    } catch (error) {
+      console.log("Error with adding card to cart, ", error);
+    }
+  };
+
+  const isItemAdded = (id) => {
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
+  };
   return (
     <>
       <Header />
@@ -58,10 +119,10 @@ const Home = ({ filterItems, cards }) => {
           >
             {filterItems.map((item, index) => (
               <div
-                onClick={() => onSelectFilter(index, item.filterName)}
+                onClick={() => onSelectFilter(item.filterName)}
                 key={`${item.filterName}_${index}`}
                 className={
-                  filterAnim === index
+                  category === item.filterName
                     ? styles.activeFilter + " " + styles.filterItems__drives
                     : styles.filterItems__drives
                 }
@@ -89,8 +150,8 @@ const Home = ({ filterItems, cards }) => {
           />
           <SelectCards
             defaultValue="Sort cars by ..."
-            value={sortValue}
-            onChange={(sort) => setSortValue(sort)}
+            value={sortBy}
+            onChange={(sort) => dispatch(setSortBy(sort))}
             options={[
               { value: "stockPrice", type: "sort by stock price" },
               { value: "tunerPrice", type: "sort by tuner price" },
@@ -103,18 +164,21 @@ const Home = ({ filterItems, cards }) => {
             alt="rArrow"
           />
         </div>
-        {isLoading ? <LoadAnimation/>
-        :
-        <div className={styles.content__items}>
-        {sortedAndFilteredCards.map((card, index) => (
-          <Card
-            key={`${card.name}_${index}`}
-            {...card}
-            animation={cardAnimation}
-          />
-        ))}
-      </div>
-      }
+        {isLoading ? (
+          <LoadAnimation />
+        ) : (
+          <div className={styles.content__items}>
+            {sortedAndFilteredCards.map((card, index) => (
+              <Card
+                key={`${card.name}_${index}`}
+                {...card}
+                animation={cardAnimation}
+                onAddToCart={onAddToCart}
+                isItemAdded={isItemAdded}
+              />
+            ))}
+          </div>
+        )}
       </main>
     </>
   );

@@ -14,7 +14,7 @@ const SelectCards = ({ options, value, onChange, defaultValue }) => {
       {options.map((option,index) => (
         <option
           className={styles.slct__item}
-          key={option.value}
+          key={option.value+index}
           value={option.value}
         >
           {option.type}

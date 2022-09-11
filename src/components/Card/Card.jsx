@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { AppContext } from "../../context/AppContext";
+import React, { useState } from "react";
 import classes from "./card.module.scss";
 import PropTypes from 'prop-types'
 const Card = ({
@@ -15,8 +14,8 @@ const Card = ({
   drive,
   stockPrice,
   tunerPrice,
+  onAddToCart,isItemAdded
 }) => {
-  const { onAddToCart,isItemAdded } = useContext(AppContext);
   const carTypes = ["stock", "tuner"];
   const [animChoosedType, setAnimChoosedType] = useState(0);
   const [choosedType, setChoosedType] = useState(true);
@@ -61,7 +60,7 @@ const Card = ({
           <p>{car}</p>
           {id!=='#' &&           <img
             onClick={onAddCard}
-            //src={isItemAdded(id) ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
+            src={isItemAdded(id) ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
             alt="checked"
           />}
         </div>
@@ -92,9 +91,9 @@ Card.propTypes={
 
 Card.defaultProps={
   id:'#',
-  car:'Name',
-  stockPrice:'0',
-  tunerPrice:'0',
+  car:"Name",
+  stockPrice:"0",
+  tunerPrice:"0",
   drive:'WD',
   stockImage:'https://otvet.imgsmail.ru/download/3469d045a3fac33da623e340cc5fe27f_i-3.jpg',
   tunerImage:'https://otvet.imgsmail.ru/download/3469d045a3fac33da623e340cc5fe27f_i-3.jpg',

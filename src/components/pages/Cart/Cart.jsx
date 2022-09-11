@@ -1,9 +1,20 @@
+import axios from "axios";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import styles from "./Cart.module.scss";
 const Cart = () => {
-  const { cartItems,onRemoveCartItems } = useContext(AppContext);
+  const { cartItems } = useContext(AppContext);
+  const onRemoveCartItems = (id) => {
+    try {
+      axios.delete(
+        `https://631076b736e6a2a04eeef849.mockapi.io/cartItems/${id}`
+      );
+      //setCartItems((prev) => prev.filter((el) => Number(el.id) !== Number(id)));
+    } catch (error) {
+      alert(" Owibka udaleniya ", error);
+    }
+  };
   return (
     <main className={styles.cartContent}>
       <div className={styles.cartContent__header}>

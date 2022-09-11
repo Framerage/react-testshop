@@ -3,8 +3,15 @@ import { useMemo } from "react";
 export const useSortedCards=(cards,sortValue)=>{
     const sortedCards = useMemo(()=>{
         if(sortValue){
-          if (sortValue!=='tunerPrice'){
-          return [...cards].sort((a,b)=>a[sortValue].localeCompare(b[sortValue]));
+          if (sortValue==='car'){
+            if(cards.some(el=>el.car)){
+              alert("Some car's name is undefined")
+              //console.log(cards.indexOf(el=>el.car===undefined))
+              return [...cards].filter(el=>el.car!==undefined).sort((a,b)=>a[sortValue].localeCompare(b[sortValue]));
+            }
+            else{
+              return [...cards].sort((a,b)=>a[sortValue].localeCompare(b[sortValue]));
+            }
           }
           else return [...cards].sort((a,b)=>Number(a[sortValue])-Number(b[sortValue]));
         }
