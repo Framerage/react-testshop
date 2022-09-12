@@ -1,6 +1,5 @@
 const initialState={
     cars:[],
-    isLoaded:false,
 }
 
 const cards=(state=initialState,action)=>{
@@ -8,7 +7,6 @@ const cards=(state=initialState,action)=>{
         return {
             ...state,
             cars:action.payload,
-            //isLoaded:true,
         }
      }
      return state;

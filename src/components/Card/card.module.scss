@@ -43,10 +43,10 @@
   .card__filling {
     display: flex;
     img {
-      min-width: 300px;
+      min-width: 200px;
       width: 370px;
       height: 220px;
-      min-height: 200px;
+      min-height: 150px;
       border-radius: 30px 0 0 0;
       border-bottom: 2px solid rgb(49, 46, 46);
     }
@@ -120,4 +120,30 @@
 }
 .activeType {
   background: linear-gradient(black, white) !important;
+}
+@media screen and (min-width: 368px) and (max-width:568px){
+  .card{
+    height: 300px;
+    .card__filling{
+      img{
+        width: 200px;
+        height: 150px;
+      }
+      .card__filling__shotDescrip{
+        .shotDescrip__text{
+          height: 75px;
+        }
+      }
+    }
+    .card__functional{
+      font-size: 5em;
+      img{
+        margin: 0 5px;
+      }
+      .functional__chooseType{
+        border-radius: 12px;
+        padding: 0 2px;
+      }
+    }
+  }
 }

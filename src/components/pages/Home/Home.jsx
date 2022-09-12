@@ -8,9 +8,7 @@ import SelectCards from "../../UI/SelectCards";
 import Header from "./Header/Header";
 import styles from "./Home.module.scss";
 import { setFilterBy, setSortBy } from "../../../redux/actions/filters";
-import axios from "axios";
-import { useEffect } from "react";
-import {setCardItems} from '../../../redux/actions/cards'
+import { useCallback } from "react";
 const Home = () => {
   const statusCard = [];
   const filterItems = [
@@ -30,18 +28,15 @@ const Home = () => {
       sortBy: filters.sortBy,
       category: filters.category,
     };
-  });
+  });  
+  const {isLoading,isItemAdded,onAddToCart}=useContext(AppContext)
 
-  const {cartItems,isLoading}=useContext(AppContext)
-  useEffect(()=>{
-        axios.get('https://631076b736e6a2a04eeef849.mockapi.io/cars').then(({data})=>{
-        dispatch(setCardItems(data))
-    });
-  },[])
-
-  const onSelectFilter = (filterName) => {
+  const onSelectFilter = useCallback((filterName) => {
     dispatch(setFilterBy(filterName));
-  };
+  },[]);
+  const onSelectSort=useCallback((sort)=>{
+    dispatch(setSortBy(sort))
+  },[]);
   const cardAnimation = (elem) => {
     let item = elem.target.parentElement;
     if (statusCard[item.id]) {
@@ -67,42 +62,7 @@ const Home = () => {
   //   document.body.addEventListener("click", handleOutsideClick);
   // }, []);
 
-  const onAddToCart = async (obj) => {
-    try {
-      const findItem = cartItems.find(
-        (el) => Number(el.parentId) === Number(obj.id)
-      );
-      if (findItem) {
-        // setCartItems((prev) =>
-        //   prev.filter((el) => Number(el.parentId) !== Number(obj.id))
-        // );
-        await axios.delete(
-          `https://631076b736e6a2a04eeef849.mockapi.io/cartItems/${findItem.id}`
-        );
-      } else {
-        //setCartItems((prev) => [...prev, obj]);
-        const { data } = await axios.post(
-          "https://631076b736e6a2a04eeef849.mockapi.io/cartItems",
-          obj
-        );
-        // setCartItems((prev) => prev.map((item)=>{
-        //   if(item.parentId===data.parentId){
-        //     return {
-        //       ...item,
-        //       id:data.id
-        //     }
-        //   }
-        //   return item;
-        // }));
-      }
-    } catch (error) {
-      console.log("Error with adding card to cart, ", error);
-    }
-  };
 
-  const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
-  };
   return (
     <>
       <Header />
@@ -151,7 +111,7 @@ const Home = () => {
           <SelectCards
             defaultValue="Sort cars by ..."
             value={sortBy}
-            onChange={(sort) => dispatch(setSortBy(sort))}
+            onChange={(sort) => onSelectSort(sort)}
             options={[
               { value: "stockPrice", type: "sort by stock price" },
               { value: "tunerPrice", type: "sort by tuner price" },

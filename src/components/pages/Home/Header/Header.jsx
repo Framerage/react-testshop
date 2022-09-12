@@ -37,7 +37,6 @@ const Header = () => {
     <header
       id="header"
       className={styles.header}
-      style={{ backgroundImage: "url('./img/headnight.jpg')" }}
     >
       <div className={styles.headerItems}>
         <Link to="/react-testshop/">
@@ -55,7 +54,9 @@ const Header = () => {
             <Link to="/react-testshop/cart/">
               <img src="./img/lightpacket.png" alt="Cart" />
             </Link>
+            <Link to="/react-testshop/orders/">
             <img src="./img/user.png" alt="User" />
+            </Link>
           </div>
           <div className={styles.userActive__themes}>
             <svg
