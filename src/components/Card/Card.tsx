@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import classes from "./card.module.scss";
-import PropTypes, { number } from 'prop-types'
 import { Link } from "react-router-dom";
 type CardTypes={
   id:string ,
   animation:Function,
   car:string,
-  stockImage:string,
-  stockText:string,
-  tunerText:string,
-  tunerImage:string,
-  stockHP:string,
-  tunerHP:string,
+  stockImage:string|undefined,
+  stockText:string|undefined,
+  tunerText:string|undefined,
+  tunerImage:string|undefined,
+  stockHP:string|undefined,
+  tunerHP:string|undefined,
   drive:string,
-  stockPrice:string,
-  tunerPrice:string,
+  stockPrice:string|undefined,
+  tunerPrice:string|undefined,
   onAddToCart:Function,
   isItemAdded:Function
 }
@@ -40,9 +39,10 @@ const Card :React.FC<CardTypes> = ({
   const [isAdded, setIsAdded] = useState(false);
   const onAddCard = () => {
     setIsAdded(!isAdded);
+    onAddToCart&&
     choosedType
-      ? onAddToCart({ car,id,stockImage, stockHP , stockPrice,parentId :id,choosedType })
-      : onAddToCart({ car,id,tunerImage, tunerHP, tunerPrice,parentId:id as string | undefined,choosedType });
+      ? onAddToCart({ car,id,stockImage, stockHP , stockPrice,parentId :id,choosedType,drive})
+      : onAddToCart({ car,id,tunerImage, tunerHP, tunerPrice,parentId:id,choosedType,drive });
   };
   const onClickType = (index:number) => {
     setAnimChoosedType(index);
@@ -51,7 +51,7 @@ const Card :React.FC<CardTypes> = ({
 
   return (
       <div className={classes.card} id={id}>
-        <button onClick={(elem) => animation(elem)} />
+        {animation&&<button  onClick={(elem) =>animation&& animation(elem)} />}
         <div className={classes.card__filling}>
           <img src={choosedType ? stockImage : tunerImage} alt="car" />
           <div className={classes.card__filling__shotDescrip}>
@@ -62,7 +62,7 @@ const Card :React.FC<CardTypes> = ({
           </div>
         </div>
         <div className={classes.card__functional}>
-          {carTypes.map((type, index) => (
+          {carTypes.length>1&&carTypes.map((type, index) => (
             <div
               onClick={() => onClickType(index)}
               className={
@@ -76,15 +76,17 @@ const Card :React.FC<CardTypes> = ({
             </div>
           ))}
           <p>{car}</p>
-          {id!=='#' &&           <img
+          {isItemAdded && id !=='#' ?           <img
             onClick={onAddCard}
             src={isItemAdded(id) ? "./img/btn-checked.svg" : "./img/btn-plus.svg"}
             alt="checked"
-          />}
+          />
+        :''}
         </div>
         <div className={classes.card__descrption}>
         <Link className="link" to='/react-testshop/description/'>
-          <span>Description:</span>
+          
+          <span onClick={()=>console.log(car)}>Description:</span>
           </Link>
           <div className={classes.descrptionText}>
             <span>{choosedType ? stockText : tunerText}</span>

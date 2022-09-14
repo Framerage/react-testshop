@@ -24,7 +24,7 @@ const Header = () => {
         headerBg.style.backgroundPositionY = '-550px';
       }
 
-    } else if (fillColor !== "middle") {
+    } else if (fillColor === "middle") {
       let docBg = document.getElementById("html");
       if (docBg)
       docBg.style.background =

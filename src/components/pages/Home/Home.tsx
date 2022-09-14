@@ -140,7 +140,7 @@ const Home = () => {
             {sortedAndFilteredCards &&
               sortedAndFilteredCards.map((card, index) => (
                 <Card
-                  key={`${card.name}_${index}`}
+                  key={`${card.car}_${index}`}
                   {...card}
                   animation={cardAnimation}
                   onAddToCart={onAddToCart}

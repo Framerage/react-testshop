@@ -1,5 +1,4 @@
 import React from "react";
-
 const LoadAnimation = () => {
   return (
     <div className="loadItem" >

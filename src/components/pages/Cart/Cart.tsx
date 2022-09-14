@@ -1,49 +1,65 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
+import CreatingOrder from "../../CreatingOrder";
 import styles from "./Cart.module.scss";
 const Cart = () => {
   const { cartItems, onRemoveCartItems, setCartItems } = useContext<{
-    cartItems:any;
-    onRemoveCartItems:Function;
-    setCartItems:Function
+    cartItems: any;
+    onRemoveCartItems: Function;
+    setCartItems: Function;
   }>(AppContext);
-  const [orderId, setOrderId] = useState(null);
   const [isOrderComlete, setIsOrderComlete] = useState(false);
-  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
+  const [isLoadingOrders, setIsLoadingOrders] = useState<boolean>(false);
   const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
 
+  useEffect(() => {
+    const tryCart = async () => {
+      if (!cartItems) {
+        await axios
+          .get(`https://631076b736e6a2a04eeef849.mockapi.io/cartItems/`)
+          .then(({ data }) => setCartItems(data));
+      }
+    };
+    tryCart();
+  }, []);
+  const onFillOrder=()=>{
+    setIsLoadingOrders(true);
+  }
   const onClickOrder = async () => {
     try {
-      if(cartItems){
+      if (cartItems) {
         setIsLoadingOrders(true);
-        const { data } = await axios.post(
+        await axios.post(
           "https://631076b736e6a2a04eeef849.mockapi.io/orders",
-          { items: cartItems }
+          {
+            items: cartItems,
+            time: new Date().getHours() + ":" + new Date().getMinutes(),
+          }
         );
-        setOrderId(data.id);
         setIsOrderComlete(true);
         setCartItems([]);
-  
+
         for (let i = 0; i < cartItems.length; i++) {
           const item = cartItems[i];
           await axios.delete(
             `https://631076b736e6a2a04eeef849.mockapi.io/cartItems/${item.id}`
           );
           await delay();
-      }
+          setIsLoadingOrders(false);
+        }
       }
     } catch (error) {
-      alert("Error with order");
+      console.log("Error with order");
     }
-    alert("Order complete");
-    setIsLoadingOrders(false);
   };
   return (
-    <main className={styles.cartContent}>
-      <div className={styles.cartContent__header}>
+   <>
+    <CreatingOrder opened={isLoadingOrders} />
+    <div className={styles.cartContent}>
+      <header className={styles.cartContent__header}>
         <Link to="/react-testshop/">
           <div className={styles.headerItems__logo}>
             <div className={styles.logo__img}></div>
@@ -54,8 +70,8 @@ const Cart = () => {
           <p>Basket</p>
           <div className={styles.cartLogo__img}></div>
         </div>
-      </div>
-      <div>
+      </header>
+      <main>
         <div className={styles.cartContent__descrip}>Your products</div>
         <div className={styles.cartContent__cartItems}>
           {cartItems && cartItems.length > 0 ? (
@@ -107,27 +123,46 @@ const Cart = () => {
               )
             )
           ) : (
-            <h1
+            <div
               style={{
-                margin: "20px 0",
-                fontSize: "10em",
-                color: "white",
-                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
               }}
             >
-              Nothing
-            </h1>
+              {" "}
+              <img
+                style={{
+                  margin: "10px 0",
+                }}
+                src="../img/empty-cart.png"
+                alt="empty"
+                width={200}
+              />
+              <h1
+                style={{
+                  margin: "10px 0",
+                  fontSize: "10em",
+                  color: "white",
+                  textAlign: "center",
+                }}
+              >
+                {isOrderComlete ? "Order complete!" : "Nothing"}
+              </h1>
+            </div>
           )}
         </div>
         {cartItems.length !== 0 && (
           <div className={styles.createOrder}>
-            <button onClick={onClickOrder} className={styles.createOrder__btn}>
+            <button onClick={onFillOrder} className={styles.createOrder__btn}>
               Create order
             </button>
           </div>
         )}
-      </div>
-    </main>
+      </main>
+    </div>
+   </>
   );
 };
+
 export default Cart;

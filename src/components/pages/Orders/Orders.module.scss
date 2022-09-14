@@ -1,4 +1,214 @@
-.orderContent{
+.orderContent {
+  display: flex;
+  flex-direction: column;
+  .orderContent__header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+
+    .headerItems__logo {
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 20px 10px black;
+      border-radius: 10px;
+      transition: 0.3s;
+      width: auto;
+      height: 100px;
+      min-height: 50px;
+      background: linear-gradient(white, black, white);
+      &:hover {
+        scale: 1.02;
+        cursor: pointer;
+        box-shadow: 0 0 15px 10px rgb(26, 26, 26);
+      }
+      .logo__img {
+        background-image: url("../../../../public/img/logo.png");
+        background-size: cover;
+        width: 100px;
+        height: 90px;
+        min-width: 50px;
+        min-height: 40px;
+        margin-right: 20px;
+      }
+      p {
+        font-size: 12.5em;
+        font-weight: 700;
+        font-family: "Montserrat", sans-serif;
+        color: rgb(250, 250, 250);
+        margin-right: 10px;
+      }
+    }
+    .header__orderLogo {
+      background: linear-gradient(white, black, white);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 20px 10px black;
+      border-radius: 10px;
+      width: auto;
+      height: 100px;
+      min-height: 50px;
+      padding: 0 10px;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+      p {
+        font-size: 12.5em;
+        font-weight: 700;
+        font-family: "Montserrat", sans-serif;
+        color: rgb(250, 250, 250);
+        margin: 0 10px;
+      }
+      .orderLogo__img {
+        background-image: url("../../../../public/img/invoice.png");
+        background-size: cover;
+        width: 100px;
+        height: 90px;
+        min-width: 20px;
+        min-height: 20px;
+      }
+    }
+  }
+  .orderContent__orderItems {
     display: flex;
     flex-direction: column;
+    .orderItems__descrip {
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(grey, black, grey);
+      font-size: 11em;
+      font-weight: 700;
+      font-family: "Montserrat", sans-serif;
+      color: rgb(250, 250, 250);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+    }
+    .orderItems__item {
+      display: flex;
+      flex-direction: column;
+      background-color: grey;
+      margin: 20px 0;
+      border-radius: 25px;
+      height: auto;
+      min-height: 100px;
+      box-shadow: 0 0 15px 5px black;
+      .descripName {
+        font-size: 7em;
+        color: white;
+        margin: 10px;
+        background: linear-gradient(white, black, white);
+        width: max-content;
+        padding: 5px;
+        border-radius: 10px;
+      }
+      .descripOrders {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .orderItem {
+          border-radius: 25px;
+          position: relative;
+          display: flex;
+          background: linear-gradient(black, grey, black);
+          margin: 10px 0;
+          .orderItem__img {
+            width: 550px;
+            height: 350px;
+            transition: 1s;
+            border-radius: 25px;
+            margin: 5px;
+            z-index: 10;
+            &:active {
+              scale: 1.5;
+              border-radius: 0;
+              z-index: 100;
+            }
+          }
+          .orderItem__text {
+            font-size: 5em;
+            color: white;
+            text-align: center;
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 368px) and (max-width: 568px) {
+  .orderContent {
+    .orderContent__header {
+      justify-content: center;
+      .headerItems__logo {
+        width: 155px;
+        height: 65px;
+        display: flex;
+        justify-content: center;
+        .logo__img {
+          width: 15px;
+          height: 15px;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+        p {
+          font-size: 5em;
+          margin: 0;
+        }
+      }
+      .header__orderLogo {
+        width: max-content;
+        height: 50px;
+        box-shadow: none;
+        margin-left: 10px;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+        p {
+          font-size: 5em;
+        }
+        .orderLogo__img {
+          width: 35px;
+          height: 35px;
+          margin: 0;
+        }
+      }
+    }
+    .orderContent__orderItems {
+      .orderItems__descrip {
+        font-size: 8em;
+      }
+      .orderItems__item {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;        
+        .descripName {
+          padding: 10px;
+        }
+        .descripOrders {
+            
+            .orderItem{
+                flex-direction: column;
+                padding-bottom: 15px;
+                .orderItem__img{
+                    width: 250px;
+                    height: 150px;
+                }
+                .orderItem__text{
+                    width: 250px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+      }
+    }
+  }
 }

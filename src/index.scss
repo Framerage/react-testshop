@@ -22,7 +22,6 @@ html{
     }
 }
 .wrapper{
-    position: relative;
     margin: 0 10%;
     //border: 1px solid red;
     height: 100%;
@@ -30,10 +29,11 @@ html{
 }
 .loadItem{
     width: 100%;
-    height: 300px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 15%;
     .loadItem__animation{
         width: 100px;
         height: 100px;
@@ -50,5 +50,50 @@ html{
             }
         }
     }
-
+}
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 700px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out,visibility 0.3s ease-in-out;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlayVisible {
+    visibility: visible;
+    opacity: 1;
+    .drawer{
+    transform: translateX(0);
+  
+    }
+  }
+  .drawer {
+    width: 720px;
+    height: 450px;
+    right: 0;
+    background: #ffffff;
+    border: 5px double black;
+    border-radius: 30px;
+    box-shadow: 0 0 14px 14px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  
+    h2 {
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+      font-size: 24px;
+    }
 }

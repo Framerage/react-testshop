@@ -1,6 +1,12 @@
 import React from "react";
 import styles from "./selectCards.module.scss";
-const SelectCards = ({ options, value, onChange, defaultValue }) => {
+type SelectProps={
+  options:{value:string,type:string}[];
+  value:string;
+  onChange:Function;
+  defaultValue:string;
+}
+const SelectCards:React.FC<SelectProps> = ({ options, value, onChange, defaultValue }) => {
 
   return (
     <select
@@ -11,7 +17,7 @@ const SelectCards = ({ options, value, onChange, defaultValue }) => {
       <option className={styles.slct__item} value="">
         {defaultValue}
       </option>
-      {options.map((option,index) => (
+      {options.map((option,index:number) => (
         <option
           className={styles.slct__item}
           key={option.value+index}
