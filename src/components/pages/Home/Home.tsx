@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { BaseSyntheticEvent, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../../../context/AppContext";
 import { useCards } from "../../../hooks/useCards";
@@ -10,8 +10,14 @@ import styles from "./Home.module.scss";
 import { setFilterBy, setSortBy } from "../../../redux/actions/filters";
 import { useCallback } from "react";
 const Home = () => {
-  const statusCard = [];
-  const filterItems = [
+  const statusCard: Array<boolean> | [] = [];
+  
+  type FilterTypes={
+    filterName:string;
+    filterBg:string;
+  };
+
+  const filterItems: FilterTypes[] = [
     {
       filterName: "4WD",
       filterBg: "./img/4wdBG.jpg",
@@ -21,34 +27,33 @@ const Home = () => {
       filterBg: "./img/rwdBG.jpg",
     },
   ];
-  const dispatch=useDispatch();
-  const { cards, sortBy, category } = useSelector(({ cards, filters }) => {
+  const dispatch = useDispatch();
+  const { cards, sortBy, category }:any = useSelector<any>(({ cards, filters }) => {
     return {
       cards: cards.cars,
       sortBy: filters.sortBy,
       category: filters.category,
     };
-  });  
-  const {isLoading,isItemAdded,onAddToCart}=useContext(AppContext)
+  });
+  const { isLoading, isItemAdded, onAddToCart } = useContext(AppContext);
 
-  const onSelectFilter = useCallback((filterName) => {
+  const onSelectFilter = useCallback((filterName: string | null) => {
     dispatch(setFilterBy(filterName));
-  },[]);
-  const onSelectSort=useCallback((sort)=>{
-    dispatch(setSortBy(sort))
-  },[]);
-  const cardAnimation = (elem) => {
+  }, []);
+  const onSelectSort = useCallback((sort: string) => {
+    dispatch(setSortBy(sort));
+  }, []);
+  const cardAnimation = (elem: BaseSyntheticEvent) => {
     let item = elem.target.parentElement;
-    if (statusCard[item.id]) {
-      statusCard[item.id] = false;
-      item.classList.remove(`${styles.anim}`);
-    } else {
-      statusCard[item.id] = true;
-      item.classList.add(`${styles.anim}`);
-    }
+      if (statusCard[item.id]) {
+        statusCard[item.id] = false;
+        item.classList.remove(`${styles.anim}`);
+      } else {
+        statusCard[item.id] = true;
+        item.classList.add(`${styles.anim}`);
+      }
   };
   const sortedAndFilteredCards = useCards(cards, sortBy, category);
-
   // Functional to take down filter
   // const filterRef = useRef();
   // const handleOutsideClick = (event) => {
@@ -61,7 +66,6 @@ const Home = () => {
   // useEffect(() => {
   //   document.body.addEventListener("click", handleOutsideClick);
   // }, []);
-
 
   return (
     <>
@@ -77,28 +81,33 @@ const Home = () => {
             //ref={filterRef}
             className={styles.filter__filterItems}
           >
-            {filterItems.map((item, index) => (
-              <div
-                onClick={() => onSelectFilter(item.filterName)}
-                key={`${item.filterName}_${index}`}
-                className={
-                  category === item.filterName
-                    ? styles.activeFilter + " " + styles.filterItems__drives
-                    : styles.filterItems__drives
-                }
-                style={{
-                  backgroundImage: `url(${item.filterBg})`,
-                  borderRadius: `${
-                    item.filterName === "4WD" ? "0 0 0 25px" : "0 0 25px"
-                  }`,
-                  justifyContent: `${
-                    item.filterName === "4WD" ? "end" : "start"
-                  }`,
-                }}
-              >
-                <p>{item.filterName}</p>
-              </div>
-            ))}
+            {filterItems.map(
+              (
+                item: FilterTypes,
+                index: number
+              ) => (
+                <div
+                  onClick={() => onSelectFilter(item.filterName)}
+                  key={`${item.filterName}_${index}`}
+                  className={
+                    category === item.filterName
+                      ? styles.activeFilter + " " + styles.filterItems__drives
+                      : styles.filterItems__drives
+                  }
+                  style={{
+                    backgroundImage: `url(${item.filterBg})`,
+                    borderRadius: `${
+                      item.filterName === "4WD" ? "0 0 0 25px" : "0 0 25px"
+                    }`,
+                    justifyContent: `${
+                      item.filterName === "4WD" ? "end" : "start"
+                    }`,
+                  }}
+                >
+                  <p>{item.filterName}</p>
+                </div>
+              )
+            )}
           </div>
         </div>
 
@@ -111,7 +120,7 @@ const Home = () => {
           <SelectCards
             defaultValue="Sort cars by ..."
             value={sortBy}
-            onChange={(sort) => onSelectSort(sort)}
+            onChange={(sort: string) => onSelectSort(sort)}
             options={[
               { value: "stockPrice", type: "sort by stock price" },
               { value: "tunerPrice", type: "sort by tuner price" },
@@ -128,15 +137,16 @@ const Home = () => {
           <LoadAnimation />
         ) : (
           <div className={styles.content__items}>
-            {sortedAndFilteredCards.map((card, index) => (
-              <Card
-                key={`${card.name}_${index}`}
-                {...card}
-                animation={cardAnimation}
-                onAddToCart={onAddToCart}
-                isItemAdded={isItemAdded}
-              />
-            ))}
+            {sortedAndFilteredCards &&
+              sortedAndFilteredCards.map((card, index) => (
+                <Card
+                  key={`${card.name}_${index}`}
+                  {...card}
+                  animation={cardAnimation}
+                  onAddToCart={onAddToCart}
+                  isItemAdded={isItemAdded}
+                />
+              ))}
           </div>
         )}
       </main>

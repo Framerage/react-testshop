@@ -1,8 +1,25 @@
 import React, { useState } from "react";
 import classes from "./card.module.scss";
-import PropTypes from 'prop-types'
-const Card = ({
-  id,
+import PropTypes, { number } from 'prop-types'
+import { Link } from "react-router-dom";
+type CardTypes={
+  id:string ,
+  animation:Function,
+  car:string,
+  stockImage:string,
+  stockText:string,
+  tunerText:string,
+  tunerImage:string,
+  stockHP:string,
+  tunerHP:string,
+  drive:string,
+  stockPrice:string,
+  tunerPrice:string,
+  onAddToCart:Function,
+  isItemAdded:Function
+}
+const Card :React.FC<CardTypes> = ({
+  id ,
   animation,
   car,
   stockImage,
@@ -14,7 +31,8 @@ const Card = ({
   drive,
   stockPrice,
   tunerPrice,
-  onAddToCart,isItemAdded
+  onAddToCart,
+  isItemAdded
 }) => {
   const carTypes = ["stock", "tuner"];
   const [animChoosedType, setAnimChoosedType] = useState(0);
@@ -23,10 +41,10 @@ const Card = ({
   const onAddCard = () => {
     setIsAdded(!isAdded);
     choosedType
-      ? onAddToCart({ car,id,stockImage, stockHP , stockPrice,parentId:id,choosedType })
-      : onAddToCart({ car,id,tunerImage, tunerHP, tunerPrice,parentId:id,choosedType });
+      ? onAddToCart({ car,id,stockImage, stockHP , stockPrice,parentId :id,choosedType })
+      : onAddToCart({ car,id,tunerImage, tunerHP, tunerPrice,parentId:id as string | undefined,choosedType });
   };
-  const onClickType = (index) => {
+  const onClickType = (index:number) => {
     setAnimChoosedType(index);
     setChoosedType(!choosedType);
   };
@@ -65,7 +83,9 @@ const Card = ({
           />}
         </div>
         <div className={classes.card__descrption}>
+        <Link className="link" to='/react-testshop/description/'>
           <span>Description:</span>
+          </Link>
           <div className={classes.descrptionText}>
             <span>{choosedType ? stockText : tunerText}</span>
             <span>Price: {choosedType ? stockPrice : tunerPrice} US</span>
@@ -74,19 +94,6 @@ const Card = ({
       </div>
 
   );
-};
-
-Card.propTypes={
-  car:PropTypes.string,
-  stockPrice:PropTypes.string,
-  tunerPrice:PropTypes.string,
-  stockHP:PropTypes.string,
-  tunerHP:PropTypes.string,
-  stockText:PropTypes.string,
-  tunerText:PropTypes.string,
-  drive:PropTypes.string,
-  stockImage:PropTypes.string,
-  tunerImage:PropTypes.string,
 };
 
 Card.defaultProps={

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export const useSortedCards=(cards,sortValue)=>{
+export const useSortedCards=(cards:[{car:string,drive:string}|any],sortValue:string)=>{
     const sortedCards = useMemo(()=>{
         if(sortValue){
           if (sortValue==='car'){
@@ -10,6 +10,7 @@ export const useSortedCards=(cards,sortValue)=>{
               return [...cards].filter(el=>el.car!==undefined).sort((a,b)=>a[sortValue].localeCompare(b[sortValue]));
             }
             else{
+                      if(sortValue)
               return [...cards].sort((a,b)=>a[sortValue].localeCompare(b[sortValue]));
             }
           }
@@ -20,11 +21,13 @@ export const useSortedCards=(cards,sortValue)=>{
 
       return sortedCards;
 }
-export const useCards=(cards,sortValue,filterValue)=>{
-    const sortedCards=useSortedCards(cards,sortValue)
+export const useCards=(cards:[{drive:string}],sortValue:string,filterValue:string)=>{
+    const sortedCards=useSortedCards(cards as [{car:string;drive:string}],sortValue as string)
     const sortedAndFilteredCards=useMemo(()=>{
         if(filterValue){
-        return sortedCards.filter((el)=>el.drive===filterValue)}
+          if(sortedCards){
+            return sortedCards.filter((el)=>el.drive===filterValue)}
+          }
         else return sortedCards;
       },[filterValue,sortedCards])
 

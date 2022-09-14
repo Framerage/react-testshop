@@ -109,12 +109,19 @@
     display: flex;
     flex-direction: column;
     font-size: 4em;
-    color: white;
     margin: 10px 20px;
     position: relative;
+    a>span{
+      text-decoration: none;
+      color: white;
+      &:focus, &:hover, &:visited, &:link, &:active {
+          text-decoration: none;
+      }
+  }
     .descrptionText{
       display: flex;
       justify-content: space-between;
+      color: white;
     }
   }
 }

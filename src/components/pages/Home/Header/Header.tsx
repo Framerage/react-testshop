@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
 const Header = () => {
-  const [fillColor, setFillColor] = useState("black");
+  const [fillColor, setFillColor] = useState<string>("black");
   const getLightTheme = () => {
     setFillColor("white");
   };
@@ -13,23 +13,31 @@ const Header = () => {
     setFillColor("black");
   };
   useEffect(() => {
-    if (fillColor !== "black" && fillColor !== "middle") {
+    if (fillColor === "white") {
       let docBg = document.getElementById("html");
+      if (docBg)
       docBg.style.background =
         "linear-gradient(yellowgreen,yellow,coral,yellowgreen)";
       let headerBg = document.getElementById("header");
-      headerBg.style.backgroundImage = "url('./img/headsun.jpg')";
-      headerBg.style.backgroundPositionY = '-550px';
-    } else if (fillColor !== "black" && fillColor !== "white") {
+      if (headerBg){
+        headerBg.style.backgroundImage = "url('./img/headsun.jpg')";
+        headerBg.style.backgroundPositionY = '-550px';
+      }
+
+    } else if (fillColor !== "middle") {
       let docBg = document.getElementById("html");
+      if (docBg)
       docBg.style.background =
         "linear-gradient(rgb(64, 184, 224),lightpink,rgb(64, 184, 224))";
       let headerBg = document.getElementById("header");
+      if (headerBg)
       headerBg.style.backgroundImage = "url('./img/headday.jpg')";
     } else {
       let docBg = document.getElementById("html");
+      if (docBg)
       docBg.style.background = "linear-gradient(black,rgb(55, 34, 93),black)";
       let headerBg = document.getElementById("header");
+      if (headerBg)
       headerBg.style.backgroundImage = "url('./img/headnight.jpg')";
     }
   }, [fillColor]);
