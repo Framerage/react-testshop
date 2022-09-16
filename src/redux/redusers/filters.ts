@@ -3,7 +3,7 @@ const initialState={
     sortBy:''
 }
 
-const filters=(state=initialState,action)=>{
+const filters=(state=initialState,action: { type: string; payload: string; })=>{
      if(action.type === 'SET_SORT_BY'){
         return {
             ...state,

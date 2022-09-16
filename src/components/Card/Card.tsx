@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import classes from "./card.module.scss";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setDescrip } from "../../redux/actions/descripPage";
 type CardTypes={
   id:string ,
   animation:Function,
@@ -33,6 +35,7 @@ const Card :React.FC<CardTypes> = ({
   onAddToCart,
   isItemAdded
 }) => {
+  const dispatch=useDispatch()
   const carTypes = ["stock", "tuner"];
   const [animChoosedType, setAnimChoosedType] = useState(0);
   const [choosedType, setChoosedType] = useState(true);
@@ -85,8 +88,7 @@ const Card :React.FC<CardTypes> = ({
         </div>
         <div className={classes.card__descrption}>
         <Link className="link" to='/react-testshop/description/'>
-          
-          <span onClick={()=>console.log(car)}>Description:</span>
+          <span onClick={()=>dispatch(setDescrip(car))}>Description:</span>
           </Link>
           <div className={classes.descrptionText}>
             <span>{choosedType ? stockText : tunerText}</span>
@@ -94,7 +96,6 @@ const Card :React.FC<CardTypes> = ({
           </div>
         </div>
       </div>
-
   );
 };
 

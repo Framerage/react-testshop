@@ -1,99 +1,322 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style-type: none;
-    text-decoration: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
 }
 
-html{
-    background:linear-gradient(
-        rgb(64, 184, 224),
-    violet,rgb(64, 184, 224),
-    );
-    animation: sea 60s linear infinite ;
-    width: 100%;
-    height: 100%;
-    font-size: 4px;
+html {
+  background: linear-gradient(rgb(64, 184, 224), violet, rgb(64, 184, 224));
+  animation: sea 60s linear infinite;
+  width: 100%;
+  height: 100%;
+  font-size: 4px;
 }
-@keyframes sea{
-    from {
-        background-position: 0px -3000px;
+@keyframes sea {
+  from {
+    background-position: 0px -3000px;
+  }
+}
+.wrapper {
+  margin: 0 10%;
+  //border: 1px solid red;
+  height: 100%;
+  min-height: 500px;
+}
+.loadItem {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15%;
+  .loadItem__animation {
+    width: 100px;
+    height: 100px;
+    border: 5px dashed grey;
+    border-radius: 50px;
+    animation: rotate 2s ease-in-out alternate-reverse infinite;
+    @keyframes rotate {
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: 360deg;
+        scale: 2;
+      }
     }
-}
-.wrapper{
-    margin: 0 10%;
-    //border: 1px solid red;
-    height: 100%;
-    min-height: 500px;
-}
-.loadItem{
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 15%;
-    .loadItem__animation{
-        width: 100px;
-        height: 100px;
-        border: 5px dashed grey;
-        border-radius: 50px;
-        animation: rotate 2s ease-in-out alternate-reverse infinite;
-        @keyframes rotate {
-            from{
-                rotate: 0deg;
-            }
-            to{
-                rotate: 360deg;
-                scale: 2;
-            }
-        }
-    }
+  }
 }
 .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    min-height: 700px;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out,visibility 0.3s ease-in-out;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .overlayVisible {
-    visibility: visible;
-    opacity: 1;
-    .drawer{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 700px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlayVisible {
+  visibility: visible;
+  opacity: 1;
+  .createOrder {
     transform: translateX(0);
-  
-    }
   }
-  .drawer {
-    width: 720px;
-    height: 450px;
-    right: 0;
-    background: #ffffff;
-    border: 5px double black;
-    border-radius: 30px;
-    box-shadow: 0 0 14px 14px rgba(0, 0, 0, 0.5);
-    padding: 30px;
+}
+.createOrder {
+  width: 520px;
+  height: 400px;
+  background: #ffffff;
+  border: 5px double black;
+  border-radius: 30px;
+  box-shadow: 0 0 14px 14px rgba(0, 0, 0, 0.5);
+  display: flex;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  .stage {
+    width: 100%;
+    height: auto;
+    margin: 20px;
     display: flex;
     flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-  
-    h2 {
+    justify-content: space-between;
+    position: relative;
+    .stage__header {
       display: flex;
       justify-content: space-between;
-      margin: 0;
-      font-size: 24px;
     }
+    .firstStage__userInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin: 50px 15px;
+      position: absolute;
+      left: 0;
+      transition: 1s;
+      .userInfo__option {
+        margin: 10px 0;
+        overflow: hidden;
+        p {
+          font-size: 6em;
+        }
+        input {
+          width: 400px;
+          height: 30px;
+          border-radius: 5px;
+          padding: 5px 15px;
+        }
+      }
+    }
+    .secondStage__cardInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin: 50px 15px;
+      position: absolute;
+      left: 700px;
+      visibility: hidden;
+      opacity: 0;
+      transition: 1s;
+      .cardInfo__option {
+        margin: 10px 0;
+        overflow: hidden;
+        p {
+          font-size: 6em;
+        }
+        input {
+          width: 400px;
+          height: 30px;
+          border-radius: 5px;
+          padding: 5px 15px;
+        }
+      }
+      .cardInfo__options {
+        margin: 10px 0;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        p {
+          font-size: 6em;
+        }
+        input {
+          width: 100px;
+          height: 30px;
+          border-radius: 5px;
+          padding: 5px 15px;
+        }
+      }
+    }
+    .thirdStage__userInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin: 50px 15px;
+      position: absolute;
+      left: 700px;
+      visibility: hidden;
+      opacity: 0;
+      transition: 1s;
+      .userInfo__option {
+        margin: 10px 0;
+        overflow: hidden;
+        p {
+          font-size: 6em;
+        }
+        input {
+          width: 400px;
+          height: 30px;
+          border-radius: 5px;
+          padding: 5px 15px;
+        }
+      }
+      .userInfo__options {
+        margin: 10px 0;
+        overflow: hidden;
+        display: flex;
+        .longOption {
+          p {
+            font-size: 6em;
+          }
+          input {
+            width: 150px;
+            height: 30px;
+            border-radius: 5px;
+            padding: 5px 10px;
+          }
+        }
+
+        .shotOption {
+          p {
+            font-size: 6em;
+          }
+          input {
+            width: 100px;
+            height: 30px;
+            border-radius: 5px;
+            padding: 5px 10px;
+          }
+        }
+      }
+    }
+    .userActive {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    font-size: 24px;
+  }
+  img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    &:active {
+      scale: 0.9;
+    }
+  }
+  button {
+    width: 100px;
+    height: 25px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
+    border-radius: 12px;
+    transition: 0.1s;
+    &:active {
+      scale: 0.9;
+    }
+    &:hover {
+      box-shadow: 0 0 26px 2px grey;
+    }
+  }
+  .stageExit {
+    left: -500px !important;
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
+  .stageInner {
+    left: 0px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .visibleBtn {
+    visibility: hidden;
+  }
+}
+@media screen and (min-width: 300px) and (max-width: 568px) {
+  .overlay {
+    .createOrder {
+      width: 300px;
+      height: 400px;
+      .stage {
+        .firstStage__userInfo {
+          width: 200px;
+          margin: 50px 5px;
+          input {
+            width: 200px;
+          }
+          p {
+            font-size: 6em;
+          }
+        }
+        .secondStage__cardInfo {
+          width: 200px;
+          margin: 50px 5px;
+          .cardInfo__option {
+            p {
+              font-size: 4em;
+            }
+            input {
+              width: 200px;
+            }
+          }
+          .cardInfo__options {
+            p {
+              font-size: 4em;
+            }
+            input {
+              width: 85px;
+            }
+          }
+        }
+        .thirdStage__userInfo {
+          width: 200px;
+          margin: 50px 5px;
+          input {
+            width: 170px;
+          }
+          .longOption {
+            p {
+              font-size: 4em;
+            }
+            input {
+              width: 100px;
+            }
+          }
+
+          .shotOption {
+            p {
+              font-size: 4em;
+            }
+            input {
+              width: 70px;
+            }
+          }
+        }
+      }
+    }
+  }
 }

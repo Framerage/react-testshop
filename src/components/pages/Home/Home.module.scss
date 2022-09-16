@@ -1,6 +1,5 @@
 .content {
   position: relative;
-  //border: 1px solid blue;
   height: auto;
   min-height: 500px;
   .content__filter {
@@ -22,14 +21,14 @@
       justify-content: center;
       height: 100px;
       background: linear-gradient(grey, black, grey);
-      span{
+      span {
         font-size: 0.75em;
         box-shadow: 0 0 10px 5px grey;
         border-radius: 15px;
         padding: 0 10px;
         margin-bottom: 5px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           color: black;
         }
       }
@@ -75,9 +74,7 @@
   .content__items {
     display: flex;
     flex-wrap: wrap;
-  justify-content: center;
-
-    //justify-content: space-evenly;
+    justify-content: center;
   }
 }
 .anim {

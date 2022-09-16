@@ -141,7 +141,7 @@
     }
   }
 }
-@media screen and (min-width: 368px) and (max-width: 568px) {
+@media screen and (min-width: 300px) and (max-width: 568px) {
   .orderContent {
     .orderContent__header {
       justify-content: center;
@@ -187,26 +187,25 @@
       .orderItems__item {
         flex-direction: column;
         align-items: center;
-        justify-content: center;        
+        justify-content: center;
         .descripName {
           padding: 10px;
         }
         .descripOrders {
-            
-            .orderItem{
-                flex-direction: column;
-                padding-bottom: 15px;
-                .orderItem__img{
-                    width: 250px;
-                    height: 150px;
-                }
-                .orderItem__text{
-                    width: 250px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+          .orderItem {
+            flex-direction: column;
+            padding-bottom: 15px;
+            .orderItem__img {
+              width: 250px;
+              height: 150px;
             }
+            .orderItem__text {
+              width: 250px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
         }
       }
     }

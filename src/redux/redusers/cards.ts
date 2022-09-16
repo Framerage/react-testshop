@@ -2,7 +2,7 @@ const initialState={
     cars:[],
 }
 
-const cards=(state=initialState,action)=>{
+const cards=(state=initialState,action: { type: string; payload: any; })=>{
      if(action.type === 'SET_CARS'){
         return {
             ...state,

@@ -10,7 +10,7 @@
   background: linear-gradient(black, gray, black);
   display: flex;
   flex-direction: column;
-  &:hover{
+  &:hover {
     box-shadow: 0 0 25px 5px grey;
   }
   button {
@@ -75,11 +75,11 @@
     align-items: center;
     justify-content: space-around;
     font-size: 5em;
-    img{
+    img {
       width: 30px;
       border-radius: 15px;
-      margin-right:  20px;
-      &:hover{
+      margin-right: 20px;
+      &:hover {
         cursor: pointer;
         scale: 1.05;
       }
@@ -107,20 +107,24 @@
       font-family: "Montserrat", sans-serif;
     }
   }
-  .card__descrption{
+  .card__descrption {
     display: flex;
     flex-direction: column;
     font-size: 4em;
     margin: 10px 20px;
     position: relative;
-    a>span{
+    a > span {
       text-decoration: none;
       color: white;
-      &:focus, &:hover, &:visited, &:link, &:active {
-          text-decoration: none;
+      &:focus,
+      &:hover,
+      &:visited,
+      &:link,
+      &:active {
+        text-decoration: none;
       }
-  }
-    .descrptionText{
+    }
+    .descrptionText {
       display: flex;
       justify-content: space-between;
       color: white;
@@ -130,26 +134,26 @@
 .activeType {
   background: linear-gradient(black, white) !important;
 }
-@media screen and (min-width: 368px) and (max-width:568px){
-  .card{
+@media screen and (min-width: 300px) and (max-width: 568px) {
+  .card {
     height: 300px;
-    .card__filling{
-      img{
+    .card__filling {
+      img {
         width: 200px;
         height: 150px;
       }
-      .card__filling__shotDescrip{
-        .shotDescrip__text{
+      .card__filling__shotDescrip {
+        .shotDescrip__text {
           height: 75px;
         }
       }
     }
-    .card__functional{
+    .card__functional {
       font-size: 5em;
-      img{
+      img {
         margin: 0 5px;
       }
-      .functional__chooseType{
+      .functional__chooseType {
         border-radius: 12px;
         padding: 0 2px;
       }
